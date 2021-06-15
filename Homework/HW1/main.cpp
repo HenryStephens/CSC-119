@@ -6,7 +6,12 @@ using namespace std;
 
 bool hitSphere(const Point3D &sphereCenter, double radius, const Point3D &rayOrigin, const Vector3D &rayDirection) {
     // Add your HW1 code here, replacing the return statement
-    return false;
+    auto a = rayDirection.dot(rayDirection);
+    auto aMinusC = rayOrigin-sphereCenter;
+    auto b = 2*aMinusC.dot(rayDirection);
+    auto c = aMinusC.dot(aMinusC)-(radius*radius);
+    auto result = b*b-4*a*c;
+    return result > 0;
 }
 
 int main(int argc, char** argv) {
