@@ -46,5 +46,38 @@ int main(int argc, char** argv) {
     cout << '\t' << "Expected: " << false << '\n';
     cout << '\t' << "Actual: " << testTwo << '\n';
 
+    // Test Three
+
+    const Point3D testThreeSphereCenter = {0.50, 0.50, -1};
+    const double testThreeSphereRadius = 0.50;
+
+    const auto testThree = hitSphere(testThreeSphereCenter, testThreeSphereRadius, rayOrigin, rayDirection);
+
+    cout << "Test Three: " << '\n';
+    cout << '\t' << "Expected: " << false << '\n';
+    cout << '\t' << "Actual: " << testThree << '\n';
+
+    // Test Four
+
+    const Point3D testFourSphereCenter = {2, 0.50, -2};
+    const double testFourSphereRadius = 0.49;
+
+    const auto testFour = hitSphere(testFourSphereCenter, testFourSphereRadius, rayOrigin, rayDirection);
+
+    cout << "Test Four: " << '\n';
+    cout << '\t' << "Expected: " << false << '\n';
+    cout << '\t' << "Actual: " << testFour << '\n';
+
+    // Test Five
+
+    const Point3D testFiveSphereCenter = {1000, 0.50, -100};
+    const double testFiveSphereRadius = 0.50;
+
+    const auto testFive = hitSphere(testFiveSphereCenter, testFiveSphereRadius, rayOrigin, rayDirection);
+
+    cout << "Test Five: " << '\n';
+    cout << '\t' << "Expected: " << false << '\n';
+    cout << '\t' << "Actual: " << testFive << '\n';
+
     return 0;
 }

@@ -2,7 +2,14 @@
 
 using namespace std;
 
-int main(int argc, char** argv) {
-		cout << "Hello, World!\n";
-    return 0;
+void foo(const string &s){
+  cout << "The string is " << s << "\n";
 }
+
+int main(int argc, char** argv) {
+
+  for(int i = 0; i < 3; i++){
+    foo("hello");
+  }
+}
+ 
