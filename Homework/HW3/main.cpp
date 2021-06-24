@@ -55,9 +55,6 @@ int main(int argc, char** argv) {
 
         output << imageWidth << ' ' << ImageHeight << ' ' << 255 << "\n";
 
-        red = 
-        blue = 
-
 
     }
     
