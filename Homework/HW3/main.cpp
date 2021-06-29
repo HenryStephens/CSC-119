@@ -20,43 +20,67 @@ int main(int argc, char** argv) {
             cerr << "Input stream broken\n";
         }
 
-        int imageWidth;
-        int ImageHeight;
+        double imageWidth = 256;
+        double imageHeight = 256; 
 
-
-        for(string line, token; getLine(in, line);){
+        for(string line, token; getline(in, line);){
             stringstream ss(line);
-            getLine(ss, token, ' '); //Grab first part of line
+            getline(ss, token, ' '); //Grab first part of line
             cout << "First: " << token << "\n";
-            getLine(ss, token); //Go to second thing in token
+            getline(ss, token); //Go to second thing in token
             cout << "Second: " << token << "\n";
+
+
             if(token == "imageWidth"){
-                getLine(ss, token);
+                getline(ss, token);
                 cout << token << "\n";
                 imageWidth = stoi(token); //String to Int
-                double imageHeight = stod(token); //String to Double
+                imageHeight = stod(token); //String to Double
             }
 
             if(token == "aspectRatio"){ //Token = aspectRatio
-                getLine(ss, token);
+                getline(ss, token);
                 cout << "ai:" << token << "\n";
-                getLine(ss, token);
+                getline(ss, token);
                 cout << "ai:" << token << "\n";
-                double imageHeight = stod(token); //String to Double
-                double aspectRatio = widthRatio / heightRatio;
+                imageHeight = stod(token); //String to Double
+                double aspectRatio = imageHeight / imageWidth;
             }
             
         }
+        
     //Output file
-    //output.ppm
     ofstream output(argv[2]); //Opens a stream to write a file
 
         output << "P3\n";
 
-        output << imageWidth << ' ' << ImageHeight << ' ' << 255 << "\n";
+        output << imageWidth << ' ' << imageHeight << ' ' << 255;
+        
+        //for(double imageRow = 0; imageRow < imageWidth; imageRow++){
+            //for(double imageColumn = 0; imageColumn < imageHeight; imageColumn++){;
+            int imageRow = 256;
 
-
-    }
+            int imageColumn = 256;
+            double row = 0;
+            double column = 0;
     
+    for (int i = 0; i < imageRow; i++){
+        row++;
+        column = 0;
+        output << "\n";
+        for (int j = 0; j < imageColumn; j++){
+            column++;
+
+        //cout << "red" << "green" << "blue";
+                double red = (row/256)*255;
+                double green = (column/256)*255;
+                double blue = 64;
+                output << static_cast<int>(red) << ' ' << static_cast<int>(green) << ' ' << static_cast<int>(blue) << ' ' ;
+
+            }
+        }
+
+        
+
     return 0;
-}
+    }
