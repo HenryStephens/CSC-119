@@ -1,0 +1,5 @@
+# CSC119 Driver File
+# Written By Matthew Ernst
+
+imageWidth 256
+aspectRatio 1 1

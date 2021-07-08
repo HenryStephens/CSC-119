@@ -13,11 +13,14 @@ double hitSphere(const Point3D &sphereCenter, double radius, const Point3D &rayO
     double result = (b*b)-(4*a*c);
     double quadratic1 = -b-sqrt(result);
     double t = quadratic1/(2*a);
-    return t;
-}
+    if(result > 0){
+        return result;}
+        else if(result <= 0){
+            "Ray Missed\n";
+        }
+    }
 
 Vector3D determineBounceVector(const Point3D &sphereCenter, double radius, const string& sphereMaterial, const Point3D &rayOrigin, const Vector3D &rayDirection) {
-    // newDirection = hitPoint + hitNormalVector + kindaRandomDirection
 
     auto t = hitSphere;
     auto p = rayOrigin+t*rayDirection;

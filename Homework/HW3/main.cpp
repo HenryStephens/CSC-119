@@ -20,8 +20,9 @@ int main(int argc, char** argv) {
             cerr << "Input stream broken\n";
         }
 
-        double imageWidth = 256;
-        double imageHeight = 256; 
+        int imageWidth;
+        int imageHeight;
+        double aspectRatio; 
 
         for(string line, token; getline(in, line);){
             stringstream ss(line);
@@ -36,15 +37,15 @@ int main(int argc, char** argv) {
                 cout << token << "\n";
                 imageWidth = stoi(token); //String to Int
                 imageHeight = stod(token); //String to Double
-            }
-
-            if(token == "aspectRatio"){ //Token = aspectRatio
+            }else if(token == "aspectRatio"){ //Token = aspectRatio
                 getline(ss, token);
                 cout << "ai:" << token << "\n";
                 getline(ss, token);
                 cout << "ai:" << token << "\n";
                 imageHeight = stod(token); //String to Double
                 double aspectRatio = imageHeight / imageWidth;
+            }else {
+                continue;
             }
             
         }
@@ -56,31 +57,19 @@ int main(int argc, char** argv) {
 
         output << imageWidth << ' ' << imageHeight << ' ' << 255;
         
-        //for(double imageRow = 0; imageRow < imageWidth; imageRow++){
-            //for(double imageColumn = 0; imageColumn < imageHeight; imageColumn++){;
-            int imageRow = 256;
-
-            int imageColumn = 256;
-            double row = 0;
-            double column = 0;
+        const int imageHeight = imageWidth*aspectRatio;
+        double row = 0;
+        double column = 0;
     
-    for (int i = 0; i < imageRow; i++){
-        row++;
-        column = 0;
+    for(int i = 0; i < imageHeight; i++){
         output << "\n";
-        for (int j = 0; j < imageColumn; j++){
-            column++;
-
+        for (int j = 0; j < imageWidth; j++){
         //cout << "red" << "green" << "blue";
                 double red = (row/256)*255;
                 double green = (column/256)*255;
                 double blue = 64;
                 output << static_cast<int>(red) << ' ' << static_cast<int>(green) << ' ' << static_cast<int>(blue) << ' ' ;
-
+                }
             }
-        }
-
-        
-
     return 0;
     }
