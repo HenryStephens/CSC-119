@@ -1,45 +1,41 @@
 #include <iostream>
 #include <math.h>
-
 #include "../Vector3D/Vector3D.h"
 
 using namespace std;
-
 double hitSphere(const Point3D &sphereCenter, double radius, const Point3D &rayOrigin, const Vector3D &rayDirection) {
-    double a = rayDirection.dot(rayDirection);
-    auto aMinusC = rayOrigin-sphereCenter;
-    double b = 2*aMinusC.dot(rayDirection);
-    double c = aMinusC.dot(aMinusC)-(radius*radius);
-    double result = (b*b)-(4*a*c);
-    double quadratic1 = -b-sqrt(result);
-    double t = quadratic1/(2*a);
-    if(result > 0){
-        return result;}
-        else if(result <= 0){
-            "Ray Missed\n";
-        }
+  const auto a = rayDirection.dot(rayDirection);
+  const auto aMinusC = rayOrigin-sphereCenter;
+  const auto b = (2*aMinusC.dot(rayDirection));
+  const auto c = aMinusC.dot(aMinusC)-radius*radius;
+  const auto discriminant = (b*b)-(4*a*c);
+  const auto t = (-b) - sqrt(discriminant) / (2 * a);
+    if (discriminant < 0 && t < 0) {
+        return t;
+    } else {
+        throw "Ray Missed Sphere!"s;
     }
+}
 
 Vector3D determineBounceVector(const Point3D &sphereCenter, double radius, const string& sphereMaterial, const Point3D &rayOrigin, const Vector3D &rayDirection) {
+  // Add your HW2 code here, replacing the return statement  
+  const double t = hitSphere(sphereCenter, radius, rayOrigin, rayDirection);
+  const Vector3D P = rayOrigin + t * rayDirection;
+  const Vector3D N = (P - sphereCenter) / radius;
+  
+  Vector3D bounce;
 
-    auto t = hitSphere;
-    auto p = rayOrigin+t*rayDirection;
-    auto n = (p-sphereCenter)/radius;
-        if (sphereMaterial =="diffuse"){
-            double n+p+makeRandomUnitVector()-makeRandomUnitVector();}
-        else if (sphereMaterial=="metal"){
-            auto newDirection = rayDirection-2*(rayDirection.dot(n))*n;
-            return newDirection;}
-        else if (sphereMaterial=="glass"){
-            auto refraction = 1.5;
-            auto perpendicularBounce = refraction * (rayDirection +(-rayDirection.dot(n)*n));
-            auto parallelBounce = -sqrt(1-perpendicularBounce.length()*perpendicularBounce.length())*n;
-        return perpendicularBounce+parallelBounce;}
-        else{
-            throw "Unrecognized Material";
-        }
-
-    return Vector3D();
+  if(sphereMaterial == "diffuse"){
+      bounce = N + makeRandomUnitVector();
+  } else if (sphereMaterial == "metal"){
+      bounce = rayDirection - 2 * rayDirection.dot(N) * N;
+  } else if (sphereMaterial == "glass"){
+      const auto perpendicularBounce = 1.5 * (rayDirection + -rayDirection.dot(N) * N);
+      bounce = perpendicularBounce + -sqrt(abs(1 - perpendicularBounce.length() * perpendicularBounce.length())) * N;
+  } else {
+      throw "Unrecognized Material"s;
+  }
+return bounce.normalize();
 }
 
 int main(int argc, char** argv) {
@@ -85,7 +81,7 @@ int main(int argc, char** argv) {
     cout << '\t' << "Actual: " << testTwoT << '\n';
 
     // Test Three
-
+    
     const Point3D testThreeSphereCenter = {0, 0, -1};
     const double testThreeSphereRadius = 0.50;
     const string testThreeSphereMaterial = "metal";
