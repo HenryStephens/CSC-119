@@ -84,11 +84,18 @@ Color calculatePixelColor(Ray ray, const vector<Sphere> &spheres){
             }
         }
     }
+<<<<<<< HEAD
     if(hitOnThisBounce=true){
         return ray.closestSphere.albedo/255;
     }
     else{
         return {0,0,0};
+=======
+    if(hitOnThisBounce = true){
+        return ray.closestSphere.albedo / 255;
+    } else {
+        return {0, 0, 0};
+>>>>>>> 20 july 2021
     }
 }
 int main(int argc, char** argv) {
